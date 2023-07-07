@@ -1,0 +1,450 @@
+######################################Practical 7################################################# 
+
+# # 7. Finite state automata
+# # 7a) Define grammar using nltk. Analyze a sentence using the same.
+
+# import nltk
+# from nltk import tokenize
+# grammar1 = nltk.CFG.fromstring("""
+# S -> VP
+# VP -> VP NP
+# NP -> Det NP
+# Det -> 'that'
+# NP -> singular Noun
+# NP -> 'flight'
+# VP -> 'Book'
+# """)
+# sentence = "Book that flight"
+# for index in range(len(sentence)):
+#     all_tokens = tokenize.word_tokenize(sentence)
+# print(all_tokens)
+# parser = nltk.ChartParser(grammar1)
+# for tree in parser.parse(all_tokens):
+#     print(tree)
+#     tree.draw()
+
+
+
+# 7b) Accept the input string with Regular expression of Finite Automaton: 101+.
+# # Source code:
+
+# def FA(s):
+# #if the length is less than 3 then it can't be accepted, Therefore end the process.
+#     if len(s)<3:
+#         return "Rejected"
+# # first three characters are fixed. Therefore, checking them using index
+#     if s[0] == '1':
+#         if s[1] == '0':
+#             if s[2] == '1':
+#     # After index 2 only "1" can appear. Therefore break the process if any other
+#     # character is detected
+#                 for i in range(3,len(s)):
+#                     if s[i] != '1':
+#                          return "Rejected"
+#                 return "Accepted"  # if all 4 nested if true
+#             return "Rejected"  # else of 3rd if
+#         return "Rejected"  # else of 2nd if
+#     return "Rejected"  # else of 1st if
+# inputs = ['1','10101','101','10111','01010','100','','10111101','1011111']
+# for i in inputs:
+#     print(FA(i))
+
+#
+#
+# # 7c) Accept the input string with Regular expression of FA: (a+b)*bba.
+# # Code:
+
+import re
+
+pattern = r"(a+b)*bba"
+
+# input_string = input("Enter a string: ")
+
+for i in ["bba", "bbba", "ababbba", "abba", "abb", "baba", "bbb", ""]:
+    if re.fullmatch(pattern, i):
+        print("Input string matches the pattern!")
+    else:
+        print("Input string does not match the pattern.")
+
+#
+#
+#
+#
+#
+#
+# # d) Implementation of Deductive Chart Parsing using context free grammar and a given sentence.
+# # Source code:
+# import nltk
+# from nltk import tokenize
+# grammar1 = nltk.CFG.fromstring("""
+# S -> NP VP
+# PP -> P NP
+# NP -> Det N | Det N PP | 'I'
+# VP -> V NP | VP PP
+# Det -> 'a' | 'my'
+# N -> 'bird' | 'balcony'
+# V -> 'saw'
+# P -> 'in'
+# """)
+# sentence = "I saw a bird in my balcony"
+# for index in range(len(sentence)):
+#     all_tokens = tokenize.word_tokenize(sentence)
+# print(all_tokens)
+# # all_tokens = ['I', 'saw', 'a', 'bird', 'in', 'my', 'balcony']
+# parser = nltk.ChartParser(grammar1)
+# for tree in parser.parse(all_tokens):
+#     print(tree)
+#     tree.draw()
+
+    
+#####################################Practical 8################################################## 
+
+#prac8
+# Study PorterStemmer, LancasterStemmer, RegexpStemmer, SnowballStemmer Study WordNetLemmatizer
+
+
+from nltk.stem import PorterStemmer, LancasterStemmer, RegexpStemmer, SnowballStemmer
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
+
+# Initialize the stemmers
+porter_stemmer = PorterStemmer()
+lancaster_stemmer = LancasterStemmer()
+regexp_stemmer = RegexpStemmer('ing$|s$|e$|able$', min=4)
+snowball_stemmer = SnowballStemmer('english')
+
+# Initialize the lemmatizer
+lemmatizer = WordNetLemmatizer()
+
+# Example words to be stemmed and lemmatized
+words = ["running", "runs", "ran", "stemming", "stemmer", "stemming"]
+
+# Perform stemming using different stemmers
+print("Stemming:")
+for word in words:
+    print(f"Original: {word}")
+    print(f"Porter: {porter_stemmer.stem(word)}")
+    print(f"Lancaster: {lancaster_stemmer.stem(word)}")
+    print(f"Regexp: {regexp_stemmer.stem(word)}")
+    print(f"Snowball: {snowball_stemmer.stem(word)}")
+    print("------------")
+
+# Perform lemmatization using WordNet Lemmatizer
+print("Lemmatization:")
+for word in words:
+    print(f"Original: {word}")
+    # Get the part of speech (POS) for the word
+    pos = wordnet.synsets(word)[0].pos() if wordnet.synsets(word) else wordnet.NOUN
+    print(f"Lemmatized: {lemmatizer.lemmatize(word, pos)}")
+    print("------------")
+
+###################################################################
+ # PorterStemmer
+# import nltk
+# from nltk.stem import PorterStemmer
+# word_stemmer = PorterStemmer()
+# print(word_stemmer.stem('writing'))
+
+
+# #LancasterStemmer
+# import nltk
+# from nltk.stem import LancasterStemmer
+# Lanc_stemmer = LancasterStemmer()
+# print(Lanc_stemmer.stem('writing'))
+
+
+
+# #RegexpStemmer
+import nltk
+# from nltk.stem import RegexpStemmer
+# Reg_stemmer = RegexpStemmer('ing$|s$|e$|able$', min=4)
+# print(Reg_stemmer.stem('writing'))
+#
+
+
+
+
+
+# #SnowballStemmer
+# import nltk
+# from nltk.stem import SnowballStemmer
+# english_stemmer = SnowballStemmer('english')
+# print(english_stemmer.stem ('writing'))
+# output
+
+
+
+
+
+
+# #WordNetLemmatizer
+# from nltk.stem import WordNetLemmatizer
+# lemmatizer = WordNetLemmatizer()
+# print("word :\tlemma")
+# print("rocks :", lemmatizer.lemmatize("rocks"))
+# print("corpora :", lemmatizer.lemmatize("corpora"))
+# # a denotes adjective in "pos"
+# print("better :", lemmatizer.lemmatize("better", pos ="a"))
+
+
+
+
+###########################Practical 9############################################################ 
+
+# #pip install pandas
+# #pip install sklearn
+# import pandas as pd
+# import numpy as np
+# sms_data = pd.read_csv("spam.csv", encoding='latin-1')
+# import re
+# import nltk
+# from nltk.corpus import stopwords
+# from nltk.stem.porter import PorterStemmer
+# stemming = PorterStemmer()
+# corpus = []
+# for i in range (0,len(sms_data)):
+# s1 = re.sub('[^a-zA-Z]',repl = ' ',string = sms_data['v2'][i])
+# s1.lower()
+# s1 = s1.split()
+# s1 = [stemming.stem(word) for word in s1 if word not in
+# set(stopwords.words('english'))]
+# s1 = ' '.join(s1)
+# corpus.append(s1)
+# from sklearn.feature_extraction.text import CountVectorizer
+# countvectorizer =CountVectorizer()
+# x = countvectorizer.fit_transform(corpus).toarray()
+# print(x)
+# y = sms_data['v1'].values
+# print(y)
+# from sklearn.model_selection import train_test_split
+# x_train,x_test,y_train,y_test = train_test_split(x,y,test_size = 0.3,
+# stratify=y,random_state=2)
+# #Multinomial Naïve Bayes.
+# from sklearn.naive_bayes import MultinomialNB
+# multinomialnb = MultinomialNB()
+# multinomialnb.fit(x_train,y_train)
+# # Predicting on test data:
+# y_pred = multinomialnb.predict(x_test)
+# print(y_pred)
+# #Results of our Models
+#
+# from sklearn.metrics import classification_report, confusion_matrix
+# from sklearn.metrics import accuracy_score
+# print(classification_report(y_test,y_pred))
+# print("accuracy_score: ",accuracy_score(y_test,y_pred))
+# input:
+# spam.csv file from github
+
+
+
+################################Practical 10#######################################################
+
+# a. Speech Tagging:
+# i. Speech tagging using spacy
+# code
+# import spacy
+# sp = spacy.load('en_core_web_sm')
+# sen = sp(u"I like to play football. I hated it in my childhood though")
+# print(sen.text)
+# print(sen[7].pos_)
+# print(sen[7].tag_)
+# print(spacy.explain(sen[7].tag_))
+# for word in sen:
+# print(f'{word.text:{12}} {word.pos_:{10}} {word.tag_:{8}}
+# {spacy.explain(word.tag_)}')
+# sen = sp(u'Can you google it?')
+# word = sen[2]
+# print(f'{word.text:{12}} {word.pos_:{10}} {word.tag_:{8}}
+# {spacy.explain(word.tag_)}')
+# sen = sp(u'Can you search it on google?')
+# word = sen[5]
+# print(f'{word.text:{12}} {word.pos_:{10}} {word.tag_:{8}}
+# {spacy.explain(word.tag_)}')
+# #Finding the Number of POS Tags
+# sen = sp(u"I like to play football. I hated it in my childhood though")
+# num_pos = sen.count_by(spacy.attrs.POS)
+# num_pos
+# for k,v in sorted(num_pos.items()):
+# print(f'{k}. {sen.vocab[k].text:{8}}: {v}')
+
+
+# #Visualizing Parts of Speech Tags
+# from spacy import displacy
+# sen = sp(u"I like to play football. I hated it in my childhood though")
+# displacy.serve(sen, style='dep', options={'distance': 120})
+
+# ii. Speech tagging using nktl
+# code:
+# import nltk
+# from nltk.corpus import state_union
+# from nltk.tokenize import PunktSentenceTokenizer
+# #create our training and testing data:
+# train_text = state_union.raw("2005-GWBush.txt")
+# sample_text = state_union.raw("2006-GWBush.txt")
+# #train the Punkt tokenizer like:
+# custom_sent_tokenizer = PunktSentenceTokenizer(train_text)
+# # tokenize:
+# tokenized = custom_sent_tokenizer.tokenize(sample_text)
+# def process_content():
+# try:
+# for i in tokenized[:2]:
+# words = nltk.word_tokenize(i)
+# tagged = nltk.pos_tag(words)
+# print(tagged)
+# except Exception as e:
+# print(str(e))
+# process_content()
+#
+#
+# b. Statistical parsing:
+
+# i. Usage of Give and Gave in the Penn Treebank sample
+# Source code:
+
+# #probabilitistic parser
+
+# #Usage of Give and Gave in the Penn Treebank sample
+
+# import nltk
+# import nltk.parse.viterbi
+# import nltk.parse.pchart
+# def give(t):
+# return t.label() == 'VP' and len(t) > 2 and t[1].label() == 'NP'\
+# and (t[2].label() == 'PP-DTV' or t[2].label() == 'NP')\
+# and ('give' in t[0].leaves() or 'gave' in t[0].leaves())
+# def sent(t):
+# return ' '.join(token for token in t.leaves() if token[0] not in '*-0')
+# def print_node(t, width):
+# output = "%s %s: %s / %s: %s" %\
+# (sent(t[0]), t[1].label(), sent(t[1]), t[2].label(), sent(t[2]))
+# if len(output) > width:
+# output = output[:width] + "..."
+# print (output)
+# for tree in nltk.corpus.treebank.parsed_sents():
+# for t in tree.subtrees(give):
+# print_node(t, 72)
+
+# ii. probabilistic parser
+
+# Source code:
+# import nltk
+# from nltk import PCFG
+# grammar = PCFG.fromstring('''
+# NP -> NNS [0.5] | JJ NNS [0.3] | NP CC NP [0.2]
+# NNS -> "men" [0.1] | "women" [0.2] | "children" [0.3] | NNS CC NNS [0.4]
+# JJ -> "old" [0.4] | "young" [0.6]
+# CC -> "and" [0.9] | "or" [0.1]
+# ''')
+# print(grammar)
+# viterbi_parser = nltk.ViterbiParser(grammar)
+# token = "old men and women".split()
+# obj = viterbi_parser.parse(token)
+# print("Output: ")
+# for x in obj:
+# print(x)
+
+# c. Malt parsing:
+
+# Parse a sentence and draw a tree using malt parsing.
+
+# Note: 1) Java should be installed.
+# 2) maltparser-1.7.2 zip file should be copied in C:\Users\Beena
+# Kapadia\AppData\Local\Programs\Python\Python39 folder and should be
+# extracted in the same folder.
+# 3) engmalt.linear-1.7.mco file should be copied to C:\Users\Beena
+# Kapadia\AppData\Local\Programs\Python\Python39 folder
+# Source code:
+# # copy maltparser-1.7.2(unzipped version) and engmalt.linear-1.7.mco files to
+# C:\Users\Beena Kapadia\AppData\Local\Programs\Python\Python39 folder
+# # java should be installed
+# # environment variables should be set - MALT_PARSER - C:\Users\Beena
+# Kapadia\AppData\Local\Programs\Python\Python39\maltparser-1.7.2 and
+# MALT_MODEL - C:\Users\Beena
+# Kapadia\AppData\Local\Programs\Python\Python39\engmalt.linear-1.7.mco
+# from nltk.parse import malt
+# mp = malt.MaltParser('maltparser-1.7.2', 'engmalt.linear-1.7.mco')#file
+# t = mp.parse_one('I saw a bird from my window.'.split()).tree()
+# print(t)
+# t.draw()
+
+
+
+
+#####################################Practical 11################################################## 
+
+# 11. a) Multiword Expressions in NLP
+
+# Source code:
+# # Multiword Expressions in NLP
+# from nltk.tokenize import MWETokenizer
+# from nltk import sent_tokenize, word_tokenize
+# s = '''Good cake cost Rs.1500\kg in Mumbai. Please buy me one of them.\n\nThanks.'''
+# mwe = MWETokenizer([('New', 'York'), ('Hong', 'Kong')], separator='_')
+# for sent in sent_tokenize(s):
+	# print(mwe.tokenize(word_tokenize(sent)))
+
+
+#
+# b) Normalized Web Distance and Word Similarity
+#
+# import numpy as np
+# import re
+# import textdistance # pip install textdistance
+# # we will need scikit-learn>=0.21
+# import sklearn #pip install sklearn
+# from sklearn.cluster import AgglomerativeClustering
+# texts = [
+# 'Reliance supermarket', 'Reliance hypermarket', 'Reliance', 'Reliance', 'Reliance
+# downtown', 'Relianc market',
+# 'Mumbai', 'Mumbai Hyper', 'Mumbai dxb', 'mumbai airport',
+# 'k.m trading', 'KM Trading', 'KM trade', 'K.M. Trading', 'KM.Trading'
+# ]
+# def normalize(text):
+# """ Keep only lower-cased text and numbers"""
+# return re.sub('[^a-z0-9]+', ' ', text.lower())
+# def group_texts(texts, threshold=0.4):
+# """ Replace each text with the representative of its cluster"""
+# normalized_texts = np.array([normalize(text) for text in texts])
+# distances = 1 - np.array([
+# [textdistance.jaro_winkler(one, another) for one in normalized_texts]
+# for another in normalized_texts
+# ])
+# clustering = AgglomerativeClustering(
+# distance_threshold=threshold, # this parameter needs to be tuned carefully
+# affinity="precomputed", linkage="complete", n_clusters=None
+# ).fit(distances)
+# centers = dict()
+# for cluster_id in set(clustering.labels_):
+# index = clustering.labels_ == cluster_id
+# centrality = distances[:, index][index].sum(axis=1)
+# centers[cluster_id] = normalized_texts[index][centrality.argmin()]
+# return [centers[i] for i in clustering.labels_]
+# print(group_texts(texts))
+#
+#
+#
+#
+#
+#
+#
+# c) Word Sense Disambiguation
+# Source code:
+#Word Sense Disambiguation
+from nltk.corpus import wordnet as wn
+def get_first_sense(word, pos=None):
+    if pos:
+        synsets = wn.synsets(word,pos)
+    else:
+        synsets = wn.synsets(word)
+    return synsets[0]
+best_synset = get_first_sense('bank')
+print ('%s: %s' % (best_synset.name, best_synset.definition))
+best_synset = get_first_sense('set','n')
+print ('%s: %s' % (best_synset.name, best_synset.definition))
+best_synset = get_first_sense('set','v')
+print ('%s: %s' % (best_synset.name, best_synset.definition))
+
+
+
+
+
