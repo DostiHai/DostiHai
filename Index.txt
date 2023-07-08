@@ -1,0 +1,25 @@
+# DL Practical
+
+1) Matrix mul and eigen val and vec pract_1
+2) XOR Pract_2
+3) binaryclassification task pract_3
+
+4A) two hidden layers for performing multiclass classification and predicting the class pract_4.a
+
+4B) two hiddenlayers for performing classification and predicting the probability of class. pract_4b
+
+4C) two hidden layers for performing linear regression and predicting values pract_4c
+
+5A) regression usingKFold cross validation. pract_5A
+
+5B) multiclass Classification using KFold cross-validation. pract_5B
+
+6) regularization to avoid overfitting. pract_6
+
+7) toperform sequence analysis for stock price. pract_7
+
+8) encoding and decoding of images using deepautoencoder. pract_8
+
+9) CNN to predictnumbers from number images. pract_9
+
+10) Denoising of images using autoencoder.pract_10
